@@ -1,8 +1,7 @@
 {
-  "name": "gulptests",
+  "name": "IQ.Frontend",
   "version": "1.0.0",
-  "description": "b;la bla bla",
-  "main": "index.js",
+  "description": "b;la bla bla", 
   "devDependencies": {
     "angular": "^1.5.8",
     "angular-animate": "^1.5.8",
@@ -30,11 +29,10 @@
     "rimraf": "^2.5.4",
     "run-sequence": "^1.2.2",
     "superstatic": "^4.0.3",
-    "tsd": "^0.6.5",
     "tslint": "^3.15.1",
     "typescript": "^2.0.6",
     "typings": "^1.5.0"
   },
   "author": "Muhammad Abdelrazik",
-  "license": "ISC"
+  "license": "ISC" 
 }

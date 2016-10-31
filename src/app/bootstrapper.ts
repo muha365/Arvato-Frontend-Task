@@ -26,4 +26,5 @@
         let firstScriptTag: HTMLScriptElement = document.getElementsByTagName("script")[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     });
+    angular.bootstrap(document, ["mainModule"]) ;
 })(angular);

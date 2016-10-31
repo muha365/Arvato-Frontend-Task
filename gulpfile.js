@@ -1,7 +1,7 @@
 'use strict'
 
 // paths
-var lib = "./node_modules/";
+var libRoot = "./node_modules/";
 var paths = {
     srcRoot: './src',
     srcHtmlFiles: './src/**/*.html',
@@ -15,14 +15,14 @@ var paths = {
     destCSSRoot: './dest/css/',
     destCSSFiles: './dest/css/*.css',
     lib : [
-        lib+'angular/angular.min.js',
-        lib+'angular.min.js.map',
-        lib+'angular-route.min.js',
-        lib+'angular-route.min.js.map',
-        lib+'angular-animate.min.js',
-        lib+'angular-animate.min.js.map',
-        lib+'jquery/dist/jquery.min.js',
-        lib+'jquery/dist/jquery.min.js.map'
+        libRoot+'angular/angular.min.js',
+        libRoot+'angular/angular.min.js.map',
+        libRoot+'angular-route/angular-route.min.js',
+        libRoot+'angular-route/angular-route.min.js.map',
+        libRoot+'angular-animate/angular-animate.min.js',
+        libRoot+'angular-animate/angular-animate.min.js.map',
+        libRoot+'jquery/dist/jquery.min.js',
+        libRoot+'jquery/dist/jquery.min.js.map'
 
     ]
 };
@@ -45,46 +45,55 @@ var tsc = require("gulp-typescript"),
     tsProject = tsc.createProject("tsconfig.json");
 
 // Copy html files 
-gulp.task("copy-html", function() {
-    return gulp.src(paths.srcHtmlFiles)
+gulp.task("copy-html", function(done) {
+     gulp.src(paths.srcHtmlFiles)
         .pipe(gulp.dest(paths.destRoot));
+        done();
 });
 
 // Less configuration
-gulp.task('less',['copy-html'], function() {
-    gulp.src(paths.srcLessFiles)
+gulp.task('less', function(done) {
+   gulp.src(paths.srcLessFiles)
         .pipe(less())
         .pipe(gulp.dest(paths.destCSSRoot));
+        done();
 });
 
 // Copy js lib files 
-gulp.task("copy-js",['copy-html'], function() {
-    return gulp.src(paths.lib)
-        .pipe(gulp.dest(paths.destJSFiles));
+gulp.task('copy-js', function(done) {
+     gulp.src(paths.lib)
+        .pipe(gulp.dest(paths.destJSRoot+'lib/'));
+        done();
 });
 
 // TS Lint Configuration
-gulp.task("lint", function() {
-    return gulp.src([
+gulp.task("lint", function(done) {
+    gulp.src([
         paths.srcTSFiles,
         paths.testTSFiles
     ]).pipe(tslint({
         formatter: "prose"
-    })).pipe(tslint.report())
+    })).pipe(tslint.report());
+    done();
+
 });
 
 // TS configuration
-gulp.task("ts",['lint'], function() {
+gulp.task("ts",['lint'], function(done) {
     return tsProject.src(paths.srcTSFiles)
     .pipe(sourcemaps.init())
         .pipe(tsProject())
         .js.pipe(gulp.dest(paths.destJSRoot));
+        done();
 });
 
 // watching ts changes 
 gulp.task('watch',['copy-html','copy-js',,'lint','ts'], function() {
-    gulp.watch([paths.srcHtmlFiles,paths.srcLessFiles,paths.srcTSFiles, paths.testTSFiles], ['copy-html','copy-js','less','lint','ts']);
-    gulp.watch(paths.destJSFiles).on('change', browserSync.reload);
+    var watcher = gulp.watch([paths.srcHtmlFiles,paths.srcLessFiles,paths.srcTSFiles],
+    ['copy-html','copy-js',,'lint','ts']);  
+        watcher.on('change', function(event) {
+        console.log('File ' + event.path + ' was ' + event.type);
+        });
 });
 
 gulp.task('serve', function() {
@@ -105,4 +114,4 @@ gulp.task('serve', function() {
     });
 });
 
-gulp.task('default', ["copy-html", "less", "lint", "ts",'serve']);
+gulp.task('default', ["copy-html", "less","copy-js", "lint", "ts","serve"]);

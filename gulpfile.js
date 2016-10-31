@@ -1,10 +1,11 @@
 'use strict'
 
 // paths
+var lib = "./node_modules/";
 var paths = {
     srcRoot: './src',
     srcHtmlFiles: './src/**/*.html',
-    srcLessFiles: './src/**/*.less',
+    srcLessFiles: './src/css/*.less',
     srcTSFiles: './src/**/*.ts',
     testRoot: './tests/',
     testTSFiles: './tests/**/*.ts',
@@ -12,7 +13,18 @@ var paths = {
     destJSRoot: './dest/js/',
     destJSFiles: './dest/js/*.js',
     destCSSRoot: './dest/css/',
-    destCSSFiles: './dest/css/*.css'
+    destCSSFiles: './dest/css/*.css',
+    lib : [
+        lib+'angular/angular.min.js',
+        lib+'angular.min.js.map',
+        lib+'angular-route.min.js',
+        lib+'angular-route.min.js.map',
+        lib+'angular-animate.min.js',
+        lib+'angular-animate.min.js.map',
+        lib+'jquery/dist/jquery.min.js',
+        lib+'jquery/dist/jquery.min.js.map'
+
+    ]
 };
 
 var gulp = require('gulp'),
@@ -32,7 +44,6 @@ var gulp = require('gulp'),
 var tsc = require("gulp-typescript"),
     tsProject = tsc.createProject("tsconfig.json");
 
-
 // Copy html files 
 gulp.task("copy-html", function() {
     return gulp.src(paths.srcHtmlFiles)
@@ -44,6 +55,12 @@ gulp.task('less',['copy-html'], function() {
     gulp.src(paths.srcLessFiles)
         .pipe(less())
         .pipe(gulp.dest(paths.destCSSRoot));
+});
+
+// Copy js lib files 
+gulp.task("copy-js",['copy-html'], function() {
+    return gulp.src(paths.lib)
+        .pipe(gulp.dest(paths.destJSFiles));
 });
 
 // TS Lint Configuration
@@ -65,8 +82,8 @@ gulp.task("ts",['lint'], function() {
 });
 
 // watching ts changes 
-gulp.task('watch',['copy-html','lint','ts'], function() {
-    gulp.watch([paths.srcHtmlFiles,paths.srcLessFiles,paths.srcTSFiles, paths.testTSFiles], ['copy-html','less','lint','ts']);
+gulp.task('watch',['copy-html','copy-js',,'lint','ts'], function() {
+    gulp.watch([paths.srcHtmlFiles,paths.srcLessFiles,paths.srcTSFiles, paths.testTSFiles], ['copy-html','copy-js','less','lint','ts']);
     gulp.watch(paths.destJSFiles).on('change', browserSync.reload);
 });
 

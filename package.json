@@ -1,7 +1,7 @@
 {
   "name": "IQ.Frontend",
   "version": "1.0.0",
-  "description": "b;la bla bla", 
+  "description": "this is angularjs 1x project using typescript", 
   "devDependencies": {
     "angular": "^1.5.8",
     "angular-animate": "^1.5.8",

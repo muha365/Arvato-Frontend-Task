@@ -1,4 +1,4 @@
-namespace arvatotube.services {
+namespace arvato.services {
 
     export interface IVideo {
         Title: string;
@@ -37,4 +37,10 @@ namespace arvatotube.services {
             throw new Error("not implemented");
         }
     }
+
+    VideoServiceFactory.$inject = ["$http"];
+    function VideoServiceFactory($http: ng.IHttpService): IVideoService {
+        return new VideoService($http);
+    }
+    angular.module("MainModule").factory("VideoService", VideoServiceFactory);
 }

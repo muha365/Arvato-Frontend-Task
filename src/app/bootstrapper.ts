@@ -1,5 +1,6 @@
+/// <reference path="../../typings/globals/gapi/index.d.ts" />
 ((angular: ng.IAngularStatic) => {
-    angular.module("MainModule", ["ngRoute"])
+    angular.module("MainModule", ["ngRoute", "ngAnimate"])
         .config(Config);
 
     Config.$inject = ["$routeProvider", "$locationProvider"];
@@ -21,10 +22,14 @@
     }
 
     angular.module("MainModule").run(() => {
-        let tag: HTMLScriptElement = document.createElement("script");
-        tag.src = "http://www.youtube.com/iframe_api";
-        let firstScriptTag: HTMLScriptElement = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     });
-    angular.bootstrap(document, ["mainModule"]) ;
 })(angular);
+
+function Initialize() {
+    gapi.client.setApiKey("AIzaSyAdR5637c8hp3mQv9m49Zz2GukLGSBATJc");
+    gapi.client.load("youtube", "v3", function() {
+        console.log("youtube loaded");
+        angular.bootstrap(document, ["MainModule"]);
+    });
+}

@@ -1,5 +1,6 @@
+/// <reference path="../../typings/globals/gapi/index.d.ts" />
 (function (angular) {
-    angular.module("MainModule", ["ngRoute"])
+    angular.module("MainModule", ["ngRoute", "ngAnimate"])
         .config(Config);
     Config.$inject = ["$routeProvider", "$locationProvider"];
     function Config($routeProvider, $locationProvider) {
@@ -18,9 +19,12 @@
         });
     }
     angular.module("MainModule").run(function () {
-        var tag = document.createElement("script");
-        tag.src = "http://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     });
 })(angular);
+function Initialize() {
+    gapi.client.setApiKey("AIzaSyAdR5637c8hp3mQv9m49Zz2GukLGSBATJc");
+    gapi.client.load("youtube", "v3", function () {
+        console.log("youtube loaded");
+        angular.bootstrap(document, ["MainModule"]);
+    });
+}

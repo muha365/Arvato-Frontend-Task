@@ -79,12 +79,11 @@ gulp.task("lint", function(done) {
 });
 
 // TS configuration
-gulp.task("ts",['lint'], function(done) {
+gulp.task("ts",['lint'], function() {
     return tsProject.src(paths.srcTSFiles)
     .pipe(sourcemaps.init())
         .pipe(tsProject())
-        .js.pipe(gulp.dest(paths.destJSRoot));
-        done();
+        .js.pipe(gulp.dest(paths.destJSRoot)); 
 });
 
 // watching ts changes 
@@ -96,7 +95,7 @@ gulp.task('watch',['copy-html','copy-js',,'lint','ts'], function() {
         });
 });
 
-gulp.task('serve', function() {
+gulp.task('serve',['ts'], function() {
     process.stdout.write('Starting browserSync and superstatic...\n');
     browserSync({
         port: 3000,

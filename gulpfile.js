@@ -11,6 +11,7 @@ var paths = {
     testRoot: './tests/',
     testTSFiles: './tests/**/*.ts',
     destRoot: './dest/',
+    destFonts: './dest/fonts/',
     destJSRoot: './dest/js/',
     destJSFiles: './dest/js/*.js',
     destCSSRoot: './dest/css/',
@@ -25,7 +26,9 @@ var paths = {
         libRoot + 'angular-animate/angular-animate.min.js',
         libRoot + 'angular-animate/angular-animate.min.js.map',
         libRoot + 'jquery/dist/jquery.min.js',
-        libRoot + 'jquery/dist/jquery.min.js.map'
+        libRoot + 'jquery/dist/jquery.min.js.map',
+        libRoot + 'bootstrap/dist/js/bootstrap.min.js.map',
+        libRoot + 'bootstrap/dist/js/bootstrap.min.js' 
     ]
 };
 
@@ -50,8 +53,10 @@ var tsc = require("gulp-typescript"),
 gulp.task("copy-html", function (done) {
     gulp.src(paths.srcHtmlFiles)
         .pipe(gulp.dest(paths.destRoot));
-        gulp.src(paths.srcViewsFiles)
-            .pipe(gulp.dest(paths.destJSRoot));
+    gulp.src(paths.srcViewsFiles)
+        .pipe(gulp.dest(paths.destJSRoot));
+        gulp.src(libRoot + 'bootstrap/dist/fonts/*.*')
+        .pipe(gulp.dest(paths.destFonts));
     done();
 });
 

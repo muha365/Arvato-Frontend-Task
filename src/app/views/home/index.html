@@ -1,0 +1,70 @@
+<div class="jumbotron">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h2 class="text-center logo"> Arvato Tube </h2>
+			</div>
+			<div class="col-lg-8">
+				<form role="form" data-ng-submit="vm.SearchCmd()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search for..." data-ng-model="vm.query">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{vm.selectedCategory.snippet.title}} <span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li data-ng-repeat="c in vm.categories"><a data-ng-click="vm.CategorySelected(c)" href="#">{{ c.snippet.title}}</a></li>
+							</ul>
+						</div>
+						<!-- /btn-group -->
+						<span class="input-group-btn">
+                                <button class="btn btn-danger" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+					</div>
+					<!-- /input-group -->
+				</form>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+</div>
+<div class="row" data-ng-controller="HomeController">
+	<div class="col-md-8" id="result-pane">
+		<h4 class="sub-header"><i class="glyphicon glyphicon-film"> </i> Results</h4>
+		<div class="multi-row">
+			<div data-ng-repeat="v in vm.searchResult.items" class="search-item">
+				<div class="thumbnail">
+					<img class="img-thumbnail" data-ng-src="{{v.snippet.thumbnails.medium.url}}" alt="v.snippet.title">
+					<div class="caption">
+						<h4 class="lockup-title"><a>{{v.snippet.title}}</a></h4>
+						<p class="text-danger badge"> {{v.snippet.channelTitle}}</p>
+						<p>
+							<button href="#" class="btn btn-success center-block" data-ng-disabled="vm.isInList(v)" data-ng-click="vm.addToList(v)" type="button" role="button">
+                                <i class="glyphicon glyphicon-plus-sign "> </i> Add 
+                                </button>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 " id="list-pane ">
+		<h4 class="sub-header "> <i class="glyphicon glyphicon-list "></i> Play List</h4>
+		<ul class="list-unstyled media-list ">
+			<li class="media " data-ng-repeat="video in vm.playList ">
+				<a class="media-left " href="# ">
+					<img class="media-object " src="{{video.snippet.thumbnails.default.url}} " alt="Generic placeholder image ">
+					<!-- media-object 1 -->
+				</a>
+				<div class="media-body ">
+					<h4 class="media-heading ">{{video.snippet.title}}</h4>
+					<p class="text-danger badge ">{{video.snippet.channelTitle}}</p>
+					<p>
+						<button href="#" class="btn btn-danger center-block" data-ng-click="vm.removeFromList(v)" type="button" role="button">
+                                <i class="glyphicon glyphicon glyphicon-remove"> </i> delete
+                                </button>
+					</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

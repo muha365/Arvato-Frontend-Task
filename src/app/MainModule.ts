@@ -12,14 +12,16 @@
         });
 
         // routining configuration
-        $routeProvider.when("/", {
+        $routeProvider.when("/",
+        {
             controller: "HomeController",
-            templateUrl: "/app/views/home/index.html",
+            templateUrl: "/js/views/home/index.html",
             controllerAs: "vm"
         }).otherwise({
             redirectTo: "/"
         });
     }
+    angular.module("MainModule").constant("YoutubeKey", "AIzaSyAdR5637c8hp3mQv9m49Zz2GukLGSBATJc");
     angular.module("MainModule").run(() => {
 
     });

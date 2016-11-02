@@ -1,15 +1,48 @@
+@import "../../node_modules/bootstrap/less/bootstrap.less"; 
+@import "../../node_modules/bootstrap/less/theme.less"; 
 body {
     padding-top: 5px;
     padding-bottom: 20px;
     background: #f1f1f1 none repeat scroll 0 0;
+}  
+.multi-row {
+    .make-row(); 
+    margin-left: -2px;
+}
+.multi-row .search-item {
+    .make-sm-column(3);   
+    word-wrap: break-word; 
+    padding: 0;
+    margin-right: 5px;
+    width: 24% !important;
+}
+.caption{
+    overflow: hidden;
+    position: relative;
+}
+.lockup-title {
+    font-size: 13px;
+    margin-bottom: 1px;
+    max-width: 196px;
+    margin-right: 2px;
+} 
+.lockup-title a {
+    max-height: 2.6em; 
+    height: 2.6em;
+    display: block;
+    line-height: 1.3em;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
 }
 [ng-cloak] {
       display: none;
-    }
+}
 .navbar {
     margin-bottom: 2px;
-}
-
+} 
 .thumbnail {
     position: relative;
     padding: 0;
@@ -46,15 +79,43 @@ body {
 .media {
     background: #FFF;
     padding-top: 5px;
-}
-
+} 
 .media-object {
     margin-left: 5px;
-}
-
+} 
 .media-heading {
     margin-right: 1px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size:20px;
-    word-break:break-word;
+    font-family: georgia;
+    font-size: 14px; 
+    font-weight: bold;
+    word-wrap: break-word;
 } 
+li.search-item.ng-enter, 
+li.search-item.ng-leave
+{ 
+	-webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	-o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	text-overflow: clip;
+	white-space:nowrap;
+} 
+
+li.search-item.ng-leaveli.search-item.ng-leave-active,
+li.search-item.ng-enter {
+	opacity: 0;
+	width: 0px;
+	height: 0px;
+}
+
+li.search-item.ng-enter.ng-enter-active, 
+li.search-item.ng-leave {
+	opacity: 1;
+	width: 150px;
+	height: 30px;
+}
+	
